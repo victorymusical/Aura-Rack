@@ -205,34 +205,29 @@
             position: relative;
         }
 
-        /* Advanced vertical slider transformation matching The Growler sliders */
+        /* Premium Native Vertical Sliders (Fixed Coordinate Touch Maps) */
         .eq-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 6px;
-            height: 160px;
+            -webkit-appearance: slider-vertical; /* Required for iOS Safari / Mac Safari */
+            writing-mode: vertical-lr;            /* Required for Chrome / Edge / Android */
+            direction: rtl;                       /* Standardizes up-positive movement alignment */
+            width: 28px;                          /* Large finger tap Target */
+            height: 160px;                        /* Physical vertical track boundaries */
             background: #19191d;
-            border-radius: 3px;
             outline: none;
-            margin: 35px 0;
-            transform: rotate(-90deg) translateY(-40px);
-            writing-mode: bt-lr;
+            margin: 10px 0;
+            cursor: pointer;
         }
 
+        /* Custom Gold Slider Cap - Tailored precisely for vertical channels */
         .eq-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 14px;
-            height: 26px;
+            width: 30px;                          /* Horizontal layout width matching The Growler */
+            height: 14px;                         /* Vertical tracking width */
             background: linear-gradient(180deg, #e5c385 0%, #a67c37 100%);
             border-radius: 2px;
             border: 1px solid #000;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.6);
-        }
-
-        .eq-slider::-webkit-slider-thumb:active {
-            background: var(--gold-accent);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.7);
         }
 
         .eq-tag {
@@ -241,7 +236,7 @@
             letter-spacing: 1px;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 8px;
         }
 
         .eq-readout {
@@ -249,7 +244,7 @@
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--gold-accent);
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             background: #111113;
             padding: 2px 6px;
             border-radius: 3px;
@@ -392,7 +387,19 @@
         startBtn.addEventListener('click', async () => {
             if (audioCtx) return;
 
+            // DIAGNOSTIC CHECK 1: Ensure site is secure
+            if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+                alert("CRITICAL LOCK: Web Audio API requires a secure HTTPS:// connection to access audio interfaces. Please load using HTTPS.");
+                return;
+            }
+
             try {
+                // DIAGNOSTIC CHECK 2: Verify browser tool existence
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert("ERROR: This device or browser is blocking media access tools.");
+                    return;
+                }
+
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)({
                     latencyHint: 'interactive',
                     sampleRate: 48000
@@ -452,7 +459,8 @@
                 setupEventListeners();
 
             } catch (err) {
-                alert("Interface handshake rejected. Ensure permissions are allowed.");
+                // DIAGNOSTIC CHECK 3: Catch exact hardware error
+                alert("HARDWARE HANDSHAKE ERROR: " + err.name + " - " + err.message + ". Make sure no other DAW or app is locking your audio interface right now.");
                 console.error(err);
             }
         });
