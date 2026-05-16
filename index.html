@@ -1,344 +1,1350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Aura Rack - Victory Musical Instruments</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #0b0b0d; --panel-bg: #111113; --module-inner-bg: #09090b;
-            --gold-accent: #c5a059; --gold-dim: #8c6f39; --panic-color: #d32f2f;
-            --text-main: #e6e6eb; --text-muted: #8a8a93;
-            --font-sans: 'Montserrat', sans-serif; --font-serif: 'Cinzel', serif; --font-italic: 'Playfair Display', serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>The Aura Rack — Premium Channel Strip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     THE AURA RACK — "Growler" Theme
+     ============================================================ */
+  :root{
+    --bg-0:#0b0b0d;
+    --bg-grad-1:#101015;
+    --panel:#111113;
+    --panel-edge:#1c1c20;
+    --viewport:#09090b;
+    --text:#e6e6eb;
+    --text-dim:#8a8a93;
+    --gold:#c5a059;
+    --gold-bright:#e3c987;
+    --gold-deep:#8a6f3a;
+    --red-live:#c0392b;
+    --green-live:#3fae5a;
+    --track-fill:#2a2a30;
+  }
 
-        body {
-            background-color: var(--bg-color); color: var(--text-main);
-            font-family: var(--font-sans); margin: 0; padding: 30px 20px;
-            display: flex; flex-direction: column; align-items: center;
-            background-image: radial-gradient(circle at top, #1a191d 0%, #0b0b0d 70%);
-        }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 
-        .brand-header { text-align: center; margin-bottom: 40px; }
-        .brand-subtitle { font-size: 0.75rem; font-weight: 600; letter-spacing: 4px; color: var(--gold-dim); text-transform: uppercase; margin: 0 0 10px 0; }
-        .main-title { margin: 0; font-size: 3.2rem; font-weight: 400; letter-spacing: 1px; }
-        .main-title span.the { font-family: var(--font-serif); color: var(--text-main); }
-        .main-title span.name { font-family: var(--font-italic); font-style: italic; color: var(--gold-accent); margin-left: 5px; }
-        .engine-desc { font-size: 0.75rem; font-weight: 400; letter-spacing: 5px; color: var(--text-muted); text-transform: uppercase; margin: 12px 0 0 0; }
+  html,body{height:100%;}
 
-        .rack-enclosure {
-            width: 100%; max-width: 850px; background: #060607; padding: 16px; border-radius: 12px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05); border: 1px solid #1a1a1e;
-        }
+  body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 50% -10%, #1a1a22 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-grad-1) 0%, var(--bg-0) 40%, #060607 100%);
+    background-attachment:fixed;
+    min-height:100%;
+    padding:14px 12px 60px;
+    -webkit-text-size-adjust:100%;
+    overflow-x:hidden;
+  }
 
-        .master-deck {
-            background: var(--panel-bg); padding: 20px 25px; border-radius: 8px; margin-bottom: 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid #1f1f24; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-        }
+  /* subtle grain overlay */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    opacity:.035;
+    z-index:9999;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
 
-        .status-block p { margin: 0; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
-        .status-indicator { font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; margin-top: 4px; display: block; }
-        .console-buttons { display: flex; gap: 15px; }
+  .rack{
+    max-width:760px;
+    margin:0 auto;
+  }
 
-        button {
-            font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 1.5px;
-            font-size: 0.75rem; font-weight: 700; padding: 14px 24px; border-radius: 6px;
-            cursor: pointer; transition: all 0.2s ease; outline: none;
-        }
+  /* ============================================================
+     MASTER DECK (header)
+     ============================================================ */
+  .master-deck{
+    background:linear-gradient(180deg,#17171b 0%,#0e0e11 100%);
+    border:1px solid var(--panel-edge);
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+    padding:18px 18px 16px;
+    margin-bottom:18px;
+  }
 
-        #start-btn { background: linear-gradient(180deg, #2e2e36 0%, #1c1c22 100%); color: var(--text-main); border: 1px solid #3a3a42; box-shadow: 0 3px 6px rgba(0,0,0,0.4); }
-        #start-btn.active { border-color: var(--gold-accent); color: var(--gold-accent); background: linear-gradient(180deg, #241e15 0%, #14110c 100%); }
-        #panic-btn { background: linear-gradient(180deg, #3d1c1c 0%, #220f0f 100%); color: #ff8a8a; border: 1px solid var(--panic-color); }
+  .brand{
+    text-align:center;
+    margin-bottom:14px;
+  }
+  .brand h1{
+    font-family:'Cinzel',serif;
+    font-weight:700;
+    letter-spacing:.18em;
+    font-size:clamp(22px,5vw,32px);
+    background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 1px 0 rgba(0,0,0,.5);
+  }
+  .brand p{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:var(--text-dim);
+    font-size:12px;
+    letter-spacing:.04em;
+    margin-top:2px;
+  }
 
-        .aura-chassis {
-            background: var(--panel-bg); border-radius: 8px; padding: 25px; margin-bottom: 20px;
-            border: 1px solid #1f1f24; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-        }
+  .master-controls{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  @media(min-width:560px){
+    .master-controls{grid-template-columns:repeat(4,1fr);}
+  }
 
-        .chassis-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #1f1f24; padding-bottom: 12px; }
-        .chassis-title { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold-accent); }
-        .viewport-box { background: var(--module-inner-bg); border-radius: 6px; padding: 25px; border: 1px solid #161619; box-shadow: inset 0 4px 12px rgba(0,0,0,0.7); }
+  /* generic luxe button */
+  .btn{
+    font-family:'Montserrat',sans-serif;
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--text);
+    background:linear-gradient(180deg,#26262c,#141417);
+    border:1px solid #2e2e34;
+    border-radius:10px;
+    padding:14px 8px;
+    cursor:pointer;
+    transition:transform .06s ease, box-shadow .15s ease, border-color .15s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
+    user-select:none;
+    min-height:52px;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
 
-        .eq-viewport { display: grid; grid-template-columns: repeat(7, 1fr); gap: 15px; height: 240px; }
-        .eq-channel { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; position: relative; }
-        
-        .eq-slider {
-            -webkit-appearance: slider-vertical; writing-mode: vertical-lr; direction: rtl;
-            width: 28px; height: 160px; background: #19191d; outline: none; margin: 10px 0; cursor: pointer;
-        }
-        .eq-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 30px; height: 14px;
-            background: linear-gradient(180deg, #e5c385 0%, #a67c37 100%); border-radius: 2px; border: 1px solid #000; box-shadow: 0 4px 6px rgba(0,0,0,0.7);
-        }
+  .btn-power{
+    border-color:var(--gold-deep);
+    color:var(--gold-bright);
+  }
+  .btn-power.on{
+    background:linear-gradient(180deg,#3a2e16,#241c0d);
+    border-color:var(--gold);
+    box-shadow:0 0 18px rgba(197,160,89,.35), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .btn-panic{
+    border-color:#5a2620;
+    color:#e08c80;
+  }
+  .btn-panic:active{background:linear-gradient(180deg,#3a1714,#220d0b);}
 
-        .eq-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 1px; color: var(--text-muted); text-transform: uppercase; margin-top: 8px; }
-        .eq-readout { font-size: 0.7rem; font-weight: 600; color: var(--gold-accent); margin-bottom: 8px; background: #111113; padding: 2px 6px; border-radius: 3px; border: 1px solid #1c1c22; min-width: 32px; text-align: center; }
+  /* status strip */
+  .status-bar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:14px;
+    padding:8px 12px;
+    background:var(--viewport);
+    border:1px solid #1a1a1e;
+    border-radius:8px;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--text-dim);
+  }
+  .led{
+    width:10px;height:10px;border-radius:50%;
+    background:#3a1a17;
+    box-shadow:inset 0 0 4px rgba(0,0,0,.8);
+    flex:none;
+    transition:background .2s, box-shadow .2s;
+  }
+  .led.live{
+    background:var(--green-live);
+    box-shadow:0 0 10px var(--green-live), inset 0 0 3px rgba(255,255,255,.4);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{50%{opacity:.55;}}
 
-        .verb-layout { display: flex; justify-content: space-between; align-items: center; gap: 40px; padding: 10px 20px; }
-        .verb-select-box { display: flex; flex-direction: column; gap: 10px; width: 50%; }
-        .verb-select-box label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-        
-        select.aura-dropdown {
-            background: #111113; color: var(--text-main); border: 1px solid #2d2d35; padding: 14px; border-radius: 6px;
-            font-family: var(--font-sans); font-size: 0.85rem; font-weight: 600; outline: none; cursor: pointer; width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
+  /* ============================================================
+     MODULES
+     ============================================================ */
+  .module{
+    background:linear-gradient(180deg,var(--panel) 0%,#0d0d0f 100%);
+    border:1px solid var(--panel-edge);
+    border-radius:14px;
+    box-shadow:0 8px 22px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.03);
+    margin-bottom:16px;
+    overflow:hidden;
+    transition:opacity .25s ease;
+  }
+  .module.bypassed{opacity:.42;}
 
-        .verb-fader-box { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 30%; }
-        .aura-fader { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: #19191d; border-radius: 3px; outline: none; cursor: pointer; }
-        .aura-fader::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 16px; height: 24px;
-            background: linear-gradient(180deg, #e5c385 0%, #a67c37 100%); border-radius: 2px; border: 1px solid #000; box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
+  .module-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 16px;
+    background:linear-gradient(180deg,#161619,#101012);
+    border-bottom:1px solid #1a1a1e;
+  }
+  .module-title{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .module-title h2{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.1em;
+    color:var(--gold);
+  }
+  .module-title span{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:10.5px;
+    color:var(--text-dim);
+  }
 
-        .switch-container { position: relative; display: inline-block; width: 42px; height: 22px; }
-        .switch-container input { display: none; }
-        .switch-rail { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1a1a1e; transition: .25s ease; border-radius: 20px; border: 1px solid #2d2d35; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
-        .switch-rail:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background: linear-gradient(180deg, #7a7a85 0%, #4a4a52 100%); transition: .25s ease; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        input:checked + .switch-rail { border-color: var(--gold-dim); background-color: #241e15; }
-        input:checked + .switch-rail:before { transform: translateX(20px); background: linear-gradient(180deg, #e5c385 0%, #a67c37 100%); }
-    </style>
+  /* hard bypass toggle switch */
+  .toggle{
+    position:relative;
+    width:58px;height:30px;
+    border-radius:16px;
+    background:linear-gradient(180deg,#0a0a0c,#16161a);
+    border:1px solid #29292f;
+    cursor:pointer;
+    flex:none;
+    box-shadow:inset 0 2px 5px rgba(0,0,0,.7);
+    transition:border-color .2s;
+  }
+  .toggle::after{
+    content:"";
+    position:absolute;
+    top:3px;left:3px;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:linear-gradient(180deg,#4a4a52,#2a2a30);
+    box-shadow:0 2px 4px rgba(0,0,0,.6);
+    transition:transform .18s cubic-bezier(.4,1.4,.5,1), background .18s;
+  }
+  .toggle.active{
+    border-color:var(--gold);
+    background:linear-gradient(180deg,#2c2410,#3a2e16);
+  }
+  .toggle.active::after{
+    transform:translateX(28px);
+    background:linear-gradient(180deg,var(--gold-bright),var(--gold-deep));
+    box-shadow:0 2px 6px rgba(0,0,0,.6), 0 0 8px rgba(197,160,89,.5);
+  }
+  .toggle-wrap{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+  }
+  .toggle-wrap label{
+    font-size:8.5px;letter-spacing:.14em;color:var(--text-dim);
+    text-transform:uppercase;
+  }
+
+  .module-body{
+    padding:20px 16px 22px;
+  }
+
+  /* slider rack — vertical faders */
+  .fader-rack{
+    display:flex;
+    justify-content:space-around;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:14px 6px;
+  }
+  .fader{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:9px;
+    min-width:54px;
+  }
+  .fader-viewport{
+    background:var(--viewport);
+    border:1px solid #1a1a1e;
+    border-radius:8px;
+    padding:12px 6px;
+    box-shadow:inset 0 3px 8px rgba(0,0,0,.7);
+  }
+
+  /* CRITICAL: native vertical fader via writing-mode (touch-safe) */
+  input[type=range].vfader{
+    writing-mode:vertical-lr;
+    direction:rtl;
+    width:30px;
+    height:150px;
+    margin:0;
+    background:transparent;
+    -webkit-appearance:none;appearance:none;
+    cursor:pointer;
+  }
+  /* track */
+  input[type=range].vfader::-webkit-slider-runnable-track{
+    width:8px;
+    background:linear-gradient(180deg,#1f1f24,#0c0c0e);
+    border:1px solid #000;
+    border-radius:5px;
+    box-shadow:inset 0 0 5px rgba(0,0,0,.9);
+  }
+  input[type=range].vfader::-moz-range-track{
+    width:8px;
+    background:linear-gradient(180deg,#1f1f24,#0c0c0e);
+    border:1px solid #000;
+    border-radius:5px;
+  }
+  /* thumb — gold gradient cap */
+  input[type=range].vfader::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;
+    width:34px;height:20px;
+    margin-left:-13px;
+    border-radius:5px;
+    background:linear-gradient(180deg,var(--gold-bright) 0%,var(--gold) 45%,var(--gold-deep) 100%);
+    border:1px solid #5c4a24;
+    box-shadow:0 3px 7px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  input[type=range].vfader::-moz-range-thumb{
+    width:34px;height:20px;
+    border-radius:5px;
+    background:linear-gradient(180deg,var(--gold-bright) 0%,var(--gold) 45%,var(--gold-deep) 100%);
+    border:1px solid #5c4a24;
+    box-shadow:0 3px 7px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4);
+  }
+
+  .fader-label{
+    font-size:9.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    text-align:center;
+    font-weight:600;
+  }
+  .fader-readout{
+    font-family:'Cinzel',serif;
+    font-size:11px;
+    color:var(--gold-bright);
+    background:var(--viewport);
+    border:1px solid #1a1a1e;
+    border-radius:4px;
+    padding:3px 6px;
+    min-width:46px;
+    text-align:center;
+  }
+
+  /* dropdown — reverb profiles */
+  .aura-select{
+    font-family:'Montserrat',sans-serif;
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:.06em;
+    color:var(--gold-bright);
+    background:var(--viewport);
+    border:1px solid var(--gold-deep);
+    border-radius:8px;
+    padding:11px 12px;
+    width:100%;
+    cursor:pointer;
+    box-shadow:inset 0 2px 5px rgba(0,0,0,.6);
+    -webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23c5a059' stroke-width='1.6' fill='none'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+  }
+  .select-wrap{margin-bottom:18px;}
+  .select-wrap label{
+    display:block;
+    font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--text-dim);margin-bottom:7px;font-weight:600;
+  }
+
+  /* tap tempo button */
+  .tap-btn{
+    width:100%;
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:.12em;
+    color:var(--text);
+    background:linear-gradient(180deg,#24242a,#121215);
+    border:1px solid var(--gold-deep);
+    border-radius:12px;
+    padding:22px 10px;
+    cursor:pointer;
+    box-shadow:0 5px 14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+    transition:transform .05s ease, box-shadow .12s ease;
+    user-select:none;
+    margin-bottom:6px;
+  }
+  .tap-btn:active{
+    transform:scale(.985);
+    box-shadow:0 0 20px rgba(197,160,89,.4), inset 0 2px 8px rgba(0,0,0,.6);
+  }
+  .tap-btn .bpm{
+    display:block;
+    font-size:24px;
+    color:var(--gold-bright);
+    margin-top:5px;
+  }
+
+  .row-2{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+
+  .module-note{
+    font-size:9.5px;
+    color:var(--text-dim);
+    font-style:italic;
+    font-family:'Playfair Display',serif;
+    text-align:center;
+    margin-top:14px;
+  }
+
+  /* gate / pre-power overlay message */
+  .splash{
+    text-align:center;
+    padding:30px 16px;
+    color:var(--text-dim);
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:13px;
+  }
+
+  .footer{
+    text-align:center;
+    margin-top:24px;
+    color:var(--text-dim);
+    font-size:10px;
+    letter-spacing:.1em;
+    font-family:'Cinzel',serif;
+  }
+
+  /* signal flow meter */
+  .meter-wrap{
+    display:flex;align-items:center;gap:8px;
+    margin-top:10px;
+  }
+  .meter-track{
+    flex:1;height:7px;border-radius:4px;
+    background:var(--viewport);
+    border:1px solid #1a1a1e;
+    overflow:hidden;
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.8);
+  }
+  .meter-fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--green-live) 0%,var(--gold) 75%,var(--red-live) 100%);
+    transition:width .06s linear;
+  }
+  .meter-label{
+    font-size:9px;letter-spacing:.1em;color:var(--text-dim);
+  }
+</style>
 </head>
 <body>
+<div class="rack">
 
-    <header class="brand-header">
-        <p class="brand-subtitle">Victory Musical Instruments</p>
-        <h1 class="main-title"><span class="the">The</span><span class="name">Aura Rack</span></h1>
-        <p class="engine-desc">Professional Vocal & Acoustic Channel Strip</p>
-    </header>
-
-    <div class="rack-enclosure">
-        <div class="master-deck">
-            <div class="status-block">
-                <p>Engine Status</p>
-                <span id="status-indicator" class="status-indicator" style="color: var(--panic-color);">STANDBY</span>
-            </div>
-            <div class="console-buttons">
-                <button id="start-btn">POWER ON</button>
-                <button id="panic-btn">GLOBAL RESET</button>
-            </div>
-        </div>
-
-        <section class="aura-chassis">
-            <div class="chassis-header">
-                <div class="chassis-title">Aura EQ &bull; Constant-Q</div>
-                <label class="switch-container">
-                    <input type="checkbox" id="eq-bypass" checked>
-                    <span class="switch-rail"></span>
-                </label>
-            </div>
-
-            <div class="viewport-box eq-viewport">
-                <div class="eq-channel">
-                    <span class="eq-readout" id="v-80">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-80" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag">80Hz</span>
-                </div>
-                <div class="eq-channel">
-                    <span class="eq-readout" id="v-250">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-250" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag">250Hz</span>
-                </div>
-                <div class="eq-channel">
-                    <span class="eq-readout" id="v-1000">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-1000" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag">1kHz</span>
-                </div>
-                <div class="eq-channel">
-                    <span class="eq-readout" id="v-3000">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-3000" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag">3kHz</span>
-                </div>
-                <div class="eq-channel">
-                    <span class="eq-readout" id="v-7000">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-7000" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag">7kHz</span>
-                </div>
-                <div class="eq-channel">
-                    <span class="eq-readout" id="v-12000">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-12000" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag">12kHz</span>
-                </div>
-                <div class="eq-channel" style="border-left: 1px solid #1f1f24; padding-left: 10px;">
-                    <span class="eq-readout" id="v-trim" style="color: var(--text-main); border-color: #3a3a42;">0dB</span>
-                    <input type="range" class="eq-slider" id="eq-trim" min="-12" max="12" value="0" step="1">
-                    <span class="eq-tag" style="color: var(--gold-accent);">Trim</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="aura-chassis">
-            <div class="chassis-header">
-                <div class="chassis-title">AuraVerb &bull; Space Convolution</div>
-                <label class="switch-container">
-                    <input type="checkbox" id="verb-bypass" checked>
-                    <span class="switch-rail"></span>
-                </label>
-            </div>
-
-            <div class="viewport-box verb-layout">
-                <div class="verb-select-box">
-                    <label>Acoustic Environment Profile</label>
-                    <select class="aura-dropdown" id="verb-ir-select">
-                        <option value="hall">Pristine Concert Hall (Deep Width)</option>
-                        <option value="plate">Silky Studio Plate (Vocal Shimmer)</option>
-                        <option value="room">Acoustic Wooden Room (Tight Definition)</option>
-                    </select>
-                </div>
-                <div class="verb-fader-box">
-                    <span class="eq-readout" id="v-mix">15%</span>
-                    <input type="range" class="aura-fader" id="verb-mix" min="0" max="100" value="15">
-                    <span class="eq-tag">Wet / Dry</span>
-                </div>
-            </div>
-        </section>
+  <!-- ============== MASTER DECK ============== -->
+  <header class="master-deck">
+    <div class="brand">
+      <h1>THE AURA RACK</h1>
+      <p>Premium Channel Strip — for the Soloist</p>
     </div>
+    <div class="master-controls">
+      <button class="btn btn-power" id="powerBtn">Power On</button>
+      <button class="btn btn-panic" id="panicBtn" disabled>Panic</button>
+      <button class="btn" id="saveBtn" disabled>Save Config</button>
+      <button class="btn" id="loadBtn" disabled>Load Config</button>
+    </div>
+    <div class="status-bar">
+      <span class="led" id="statusLed"></span>
+      <span id="statusText">RIG OFFLINE — press Power On to engage</span>
+    </div>
+    <div class="meter-wrap">
+      <span class="meter-label">OUT</span>
+      <div class="meter-track"><div class="meter-fill" id="masterMeter"></div></div>
+    </div>
+    <!-- hidden file input for Load Config -->
+    <input type="file" id="fileInput" accept="application/json,.json" style="display:none">
+  </header>
 
-    <script>
-        // Core Engine State
-        let isRigActive = false;
-        let audioCtx = null;
-        let inputStream = null;
-        let inputNode = null;
-        let masterGain = null;
-        let safetyLimiter = null;
-        
-        // Modules
-        const filters = {};
-        const frequencies = [80, 250, 1000, 3000, 7000, 12000];
+  <!-- modules injected here -->
+  <main id="rackBody">
+    <div class="splash" id="splash">
+      The signal chain is dormant. Power the rig to reveal the seven Aura modules.
+    </div>
+  </main>
 
-        // UI Hooks
-        const startBtn = document.getElementById('start-btn');
-        const panicBtn = document.getElementById('panic-btn');
-        const statusIndicator = document.getElementById('status-indicator');
-        const eqBypassToggle = document.getElementById('eq-bypass');
-        const trimSlider = document.getElementById('eq-trim');
-        const verbMixSlider = document.getElementById('verb-mix');
+  <div class="footer">AURA AUDIO — VANILLA WEB AUDIO ENGINE</div>
+</div>
 
-        // Main Power Cycle Handler
-        startBtn.addEventListener('click', async () => {
-            // SHUTDOWN SEQUENCE
-            if (isRigActive) {
-                if (inputNode) inputNode.disconnect();
-                if (masterGain) masterGain.disconnect();
-                if (inputStream) {
-                    inputStream.getTracks().forEach(track => track.stop());
-                }
-                
-                statusIndicator.innerText = "STANDBY";
-                statusIndicator.style.color = "var(--panic-color)";
-                startBtn.classList.remove('active');
-                startBtn.innerText = "POWER ON";
-                isRigActive = false;
-                return;
+<script>
+"use strict";
+/* =================================================================
+   THE AURA RACK — AUDIO ENGINE
+   A premium browser channel strip. Native Web Audio API only.
+   ================================================================= */
+
+/* ---------- Global engine state ---------- */
+let audioCtx = null;
+let micStream = null;
+let sourceNode = null;
+let masterLimiter = null;
+let analyser = null;
+let meterRAF = null;
+let powered = false;
+
+/* The dynamic routing manager. Each entry is a module wrapper.
+   Order here == physical signal chain order. */
+const CHAIN = [];
+
+/* =================================================================
+   MODULE FACTORY
+   Every module exposes:
+     id, name, sub        — identity
+     input, output        — AudioNodes that bridge into the chain
+     bypassed             — bool
+     build(ctx)           — constructs internal nodes
+     setBypass(state)     — hard bypass: routes input->output directly
+     getState()/setState — serialization
+     params               — control descriptors for UI
+   ================================================================= */
+
+/* -------- helper: build a soft-clip waveshaper curve -------- */
+function makeSaturationCurve(amount){
+  // amount 0..1 -> drive
+  const k = amount * 100 + 0.001;
+  const n = 2048;
+  const curve = new Float32Array(n);
+  for(let i=0;i<n;i++){
+    const x = (i*2)/n - 1;
+    // soft-clipping polynomial (cubic + tanh-ish)
+    curve[i] = ((1 + k) * x) / (1 + k * Math.abs(x));
+  }
+  return curve;
+}
+
+/* -------- helper: synthetic impulse responses for reverb -------- */
+function makeImpulseResponse(ctx, profile){
+  // profiles: hall (long), plate (bright/medium), room (short)
+  const presets = {
+    hall:  { dur:2.8, decay:2.4, bright:0.6 },
+    plate: { dur:1.6, decay:3.4, bright:1.8 },
+    room:  { dur:0.7, decay:4.0, bright:1.0 }
+  };
+  const p = presets[profile] || presets.hall;
+  const rate = ctx.sampleRate;
+  const len = Math.floor(rate * p.dur);
+  const ir = ctx.createBuffer(2, len, rate);
+  for(let ch=0; ch<2; ch++){
+    const data = ir.getChannelData(ch);
+    for(let i=0;i<len;i++){
+      const t = i/len;
+      // exponential decay envelope
+      const env = Math.pow(1 - t, p.decay);
+      // brighter profiles keep more high-freq noise energy
+      let n = (Math.random()*2 - 1);
+      if(p.bright < 1.2){
+        // gently low-pass darker rooms by averaging
+        n = (n + (Math.random()*2-1)) * 0.5;
+      }
+      data[i] = n * env * (0.6 + p.bright*0.2);
+    }
+  }
+  return ir;
+}
+
+/* =================================================================
+   1. AURA EQ — Constant-Q 6-band graphic EQ
+   ================================================================= */
+function createEQ(){
+  const m = {
+    id:'eq', name:'AURA EQ', sub:'Constant-Q Graphic Equalizer',
+    bypassed:false, params:[]
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+    m.trim = ctx.createGain();
+
+    const specs = [
+      {type:'lowshelf', freq:80,    label:'80 Hz'},
+      {type:'peaking',  freq:250,   label:'250 Hz', q:1.3},
+      {type:'peaking',  freq:1000,  label:'1 kHz',  q:1.3},
+      {type:'peaking',  freq:3000,  label:'3 kHz',  q:1.3},
+      {type:'peaking',  freq:7000,  label:'7 kHz',  q:1.3},
+      {type:'highshelf',freq:12000, label:'12 kHz'}
+    ];
+    m.bands = specs.map(s=>{
+      const f = ctx.createBiquadFilter();
+      f.type = s.type;
+      f.frequency.value = s.freq;
+      if(s.q) f.Q.value = s.q;
+      f.gain.value = 0;
+      return f;
+    });
+    // chain the 6 filters in series
+    m.input.connect(m.bands[0]);
+    for(let i=0;i<m.bands.length-1;i++) m.bands[i].connect(m.bands[i+1]);
+    m.bands[m.bands.length-1].connect(m.trim);
+    m.trim.connect(m.output);
+
+    // build param descriptors
+    m.params = specs.map((s,i)=>({
+      key:'band'+i, label:s.label, min:-12, max:12, step:.5, value:0, unit:'dB',
+      apply:v=>{ m.bands[i].gain.setTargetAtTime(v, ctx.currentTime, .01); }
+    }));
+    m.params.push({
+      key:'trim', label:'Trim', min:-12, max:12, step:.5, value:0, unit:'dB',
+      apply:v=>{ m.trim.gain.setTargetAtTime(Math.pow(10,v/20), ctx.currentTime, .01); }
+    });
+  };
+  return m;
+}
+
+/* =================================================================
+   2. AURACOMP — Studio Dynamics Compressor
+   ================================================================= */
+function createComp(){
+  const m = {
+    id:'comp', name:'AURACOMP', sub:'Studio Dynamics Processor',
+    bypassed:false, params:[]
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+    m.comp = ctx.createDynamicsCompressor();
+    m.comp.knee.value = 6;
+    m.comp.attack.value = 0.012;
+    m.comp.release.value = 0.18;
+    m.makeup = ctx.createGain();
+
+    m.input.connect(m.comp);
+    m.comp.connect(m.makeup);
+    m.makeup.connect(m.output);
+
+    m.params = [
+      {key:'threshold', label:'Threshold', min:-60, max:0, step:1, value:-24, unit:'dB',
+       apply:v=>{ m.comp.threshold.setTargetAtTime(v, ctx.currentTime, .01); }},
+      {key:'ratio', label:'Ratio', min:1, max:20, step:.5, value:4, unit:':1',
+       apply:v=>{ m.comp.ratio.setTargetAtTime(v, ctx.currentTime, .01); }},
+      {key:'makeup', label:'Makeup', min:0, max:24, step:.5, value:0, unit:'dB',
+       apply:v=>{ m.makeup.gain.setTargetAtTime(Math.pow(10,v/20), ctx.currentTime, .01); }}
+    ];
+  };
+  return m;
+}
+
+/* =================================================================
+   3. AURA WAH — Dynamic Envelope Filter
+   ================================================================= */
+function createWah(){
+  const m = {
+    id:'wah', name:'AURA WAH', sub:'Dynamic Envelope Filter',
+    bypassed:true, params:[]   // heavy effect — off by default
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+    m.filter = ctx.createBiquadFilter();
+    m.filter.type = 'bandpass';
+    m.filter.Q.value = 6;
+    m.filter.frequency.value = 500;
+
+    // envelope follower via ScriptProcessor (well-supported fallback)
+    m.follower = ctx.createScriptProcessor(512, 1, 1);
+    m._env = 0;
+    m._sensitivity = 0.35;  // threshold scaling
+    m._range = 2200;        // sweep width in Hz
+    m._baseFreq = 350;
+
+    m.follower.onaudioprocess = function(e){
+      const inBuf = e.inputBuffer.getChannelData(0);
+      let peak = 0;
+      for(let i=0;i<inBuf.length;i++){
+        const a = Math.abs(inBuf[i]);
+        if(a>peak) peak = a;
+      }
+      // smooth envelope (attack fast, release slow)
+      const coeff = peak > m._env ? 0.5 : 0.04;
+      m._env += (peak - m._env) * coeff;
+      // map envelope -> filter frequency
+      const drive = Math.min(1, m._env / Math.max(0.001, m._sensitivity));
+      const target = m._baseFreq + drive * m._range;
+      m.filter.frequency.setTargetAtTime(target, ctx.currentTime, .02);
+      // pass audio through unchanged (this node only listens)
+      const outBuf = e.outputBuffer.getChannelData(0);
+      for(let i=0;i<inBuf.length;i++) outBuf[i] = inBuf[i];
+    };
+
+    // routing: input feeds BOTH the filter (audible) and the follower (analysis sink)
+    m.input.connect(m.filter);
+    m.filter.connect(m.output);
+    m.input.connect(m.follower);
+    // follower must reach destination to run; route to silent sink
+    m._sink = ctx.createGain();
+    m._sink.gain.value = 0;
+    m.follower.connect(m._sink);
+    m._sink.connect(ctx.destination);
+
+    m.params = [
+      {key:'sensitivity', label:'Sensitivity', min:5, max:90, step:1, value:35, unit:'%',
+       apply:v=>{ m._sensitivity = (100-v)/100 * 0.6 + 0.05; }},
+      {key:'range', label:'Range', min:500, max:5000, step:100, value:2200, unit:'Hz',
+       apply:v=>{ m._range = v; }}
+    ];
+  };
+  return m;
+}
+
+/* =================================================================
+   4. AURA SATURATION — Harmonic Warmth
+   ================================================================= */
+function createSaturation(){
+  const m = {
+    id:'sat', name:'AURA SATURATION', sub:'Harmonic Warmth Stage',
+    bypassed:false, params:[]
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+    m.shaper = ctx.createWaveShaper();
+    m.shaper.oversample = '4x';   // prevent aliasing
+    m.shaper.curve = makeSaturationCurve(0.18);
+    m.outGain = ctx.createGain();
+
+    m.input.connect(m.shaper);
+    m.shaper.connect(m.outGain);
+    m.outGain.connect(m.output);
+
+    m.params = [
+      {key:'drive', label:'Drive', min:0, max:100, step:1, value:18, unit:'%',
+       apply:v=>{ m.shaper.curve = makeSaturationCurve(v/100); }},
+      {key:'outgain', label:'Output', min:-18, max:6, step:.5, value:0, unit:'dB',
+       apply:v=>{ m.outGain.gain.setTargetAtTime(Math.pow(10,v/20), ctx.currentTime, .01); }}
+    ];
+  };
+  return m;
+}
+
+/* =================================================================
+   5. AURA MODULATION — Stereo Field (chorus-style)
+   ================================================================= */
+function createModulation(){
+  const m = {
+    id:'mod', name:'AURA MODULATION', sub:'Stereo Field Animator',
+    bypassed:true, params:[]
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+
+    // dry path
+    m.dry = ctx.createGain();
+    m.dry.gain.value = 0.7;
+    m.input.connect(m.dry);
+    m.dry.connect(m.output);
+
+    // wet stereo path: split into two modulated delays panned L/R
+    m.merger = ctx.createChannelMerger(2);
+
+    m.delayL = ctx.createDelay(0.05);
+    m.delayR = ctx.createDelay(0.05);
+    m.delayL.delayTime.value = 0.012;
+    m.delayR.delayTime.value = 0.014;
+
+    m.lfo = ctx.createOscillator();
+    m.lfo.type = 'sine';
+    m.lfo.frequency.value = 0.6;
+
+    m.lfoGainL = ctx.createGain();
+    m.lfoGainR = ctx.createGain();
+    m.lfoGainL.gain.value = 0.003;  // width
+    m.lfoGainR.gain.value = -0.003; // inverted for stereo spread
+
+    m.lfo.connect(m.lfoGainL); m.lfoGainL.connect(m.delayL.delayTime);
+    m.lfo.connect(m.lfoGainR); m.lfoGainR.connect(m.delayR.delayTime);
+    m.lfo.start();
+
+    m.wet = ctx.createGain();
+    m.wet.gain.value = 0.5;
+
+    m.input.connect(m.delayL); m.delayL.connect(m.merger,0,0);
+    m.input.connect(m.delayR); m.delayR.connect(m.merger,0,1);
+    m.merger.connect(m.wet);
+    m.wet.connect(m.output);
+
+    m.params = [
+      {key:'rate', label:'Rate', min:0.1, max:6, step:.1, value:0.6, unit:'Hz',
+       apply:v=>{ m.lfo.frequency.setTargetAtTime(v, ctx.currentTime, .02); }},
+      {key:'width', label:'Width', min:0, max:100, step:1, value:50, unit:'%',
+       apply:v=>{
+         const depth = (v/100) * 0.006;
+         m.lfoGainL.gain.setTargetAtTime(depth, ctx.currentTime, .02);
+         m.lfoGainR.gain.setTargetAtTime(-depth, ctx.currentTime, .02);
+       }},
+      {key:'mix', label:'Mix', min:0, max:100, step:1, value:35, unit:'%',
+       apply:v=>{
+         m.wet.gain.setTargetAtTime(v/100, ctx.currentTime, .02);
+         m.dry.gain.setTargetAtTime(1-(v/100)*0.5, ctx.currentTime, .02);
+       }}
+    ];
+  };
+  return m;
+}
+
+/* =================================================================
+   6. AURA DELAY — Time-Based Echo with Tap Tempo + Ducking
+   ================================================================= */
+function createDelay(){
+  const m = {
+    id:'delay', name:'AURA DELAY', sub:'Time-Based Echo + Ducking',
+    bypassed:true, params:[], tapTimes:[], bpm:0
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+
+    // dry
+    m.dry = ctx.createGain();
+    m.dry.gain.value = 1;
+    m.input.connect(m.dry);
+    m.dry.connect(m.output);
+
+    // wet delay line w/ feedback
+    m.delay = ctx.createDelay(2.0);
+    m.delay.delayTime.value = 0.4;
+    m.feedback = ctx.createGain();
+    m.feedback.gain.value = 0.35;
+    m.wet = ctx.createGain();
+    m.wet.gain.value = 0.4;
+
+    // ducking: a compressor on the wet path, side-chained off dry input
+    m.ducker = ctx.createDynamicsCompressor();
+    m.ducker.threshold.value = -34;
+    m.ducker.ratio.value = 12;
+    m.ducker.attack.value = 0.006;
+    m.ducker.release.value = 0.26;
+    m.ducker.knee.value = 4;
+
+    // wet routing: input -> delay -> ducker -> wet -> output
+    m.input.connect(m.delay);
+    m.delay.connect(m.feedback);
+    m.feedback.connect(m.delay);           // feedback loop
+    m.delay.connect(m.ducker);
+    m.ducker.connect(m.wet);
+    m.wet.connect(m.output);
+
+    // sidechain: dry signal also pumps the ducker's detector.
+    // (Web Audio compressors detect their own input; we emulate
+    //  ducking by feeding a scaled copy of the dry signal in so
+    //  loud dry vocals pull the wet tail down.)
+    m.sidechain = ctx.createGain();
+    m.sidechain.gain.value = 0; // silent into the audible mix
+    m.input.connect(m.sidechain);
+    m.sidechain.connect(m.ducker);
+
+    m.params = [
+      {key:'feedback', label:'Feedback', min:0, max:90, step:1, value:35, unit:'%',
+       apply:v=>{ m.feedback.gain.setTargetAtTime(v/100*0.95, ctx.currentTime, .02); }},
+      {key:'mix', label:'Wet/Dry', min:0, max:100, step:1, value:30, unit:'%',
+       apply:v=>{
+         m.wet.gain.setTargetAtTime(v/100, ctx.currentTime, .02);
+         m.dry.gain.setTargetAtTime(1, ctx.currentTime, .02);
+       }}
+    ];
+
+    // expose a setter for tap tempo
+    m.setTime = function(ms){
+      const sec = Math.min(2, Math.max(0.05, ms/1000));
+      m.delay.delayTime.setTargetAtTime(sec, ctx.currentTime, .03);
+    };
+  };
+
+  // rolling-average tap tempo
+  m.tap = function(){
+    const now = performance.now();
+    m.tapTimes.push(now);
+    // keep last 5 taps
+    if(m.tapTimes.length > 5) m.tapTimes.shift();
+    // discard stale taps (>2s gap resets)
+    if(m.tapTimes.length >= 2){
+      const last = m.tapTimes[m.tapTimes.length-1];
+      const prev = m.tapTimes[m.tapTimes.length-2];
+      if(last - prev > 2000){ m.tapTimes = [now]; return null; }
+    }
+    if(m.tapTimes.length < 2) return null;
+    let sum = 0;
+    for(let i=1;i<m.tapTimes.length;i++) sum += m.tapTimes[i]-m.tapTimes[i-1];
+    const avgMs = sum / (m.tapTimes.length-1);
+    m.bpm = Math.round(60000 / avgMs);
+    if(m.setTime) m.setTime(avgMs);
+    return { bpm:m.bpm, ms:avgMs };
+  };
+  return m;
+}
+
+/* =================================================================
+   7. AURAVERB — Space Convolution
+   ================================================================= */
+function createVerb(){
+  const m = {
+    id:'verb', name:'AURAVERB', sub:'Convolution Space Processor',
+    bypassed:false, params:[], profile:'hall'
+  };
+  m.build = function(ctx){
+    m.input = ctx.createGain();
+    m.output = ctx.createGain();
+
+    m.dry = ctx.createGain();
+    m.dry.gain.value = 0.75;
+    m.input.connect(m.dry);
+    m.dry.connect(m.output);
+
+    m.convolver = ctx.createConvolver();
+    m.convolver.buffer = makeImpulseResponse(ctx, 'hall');
+    m.wet = ctx.createGain();
+    m.wet.gain.value = 0.28;
+
+    m.input.connect(m.convolver);
+    m.convolver.connect(m.wet);
+    m.wet.connect(m.output);
+
+    m.setProfile = function(p){
+      m.profile = p;
+      m.convolver.buffer = makeImpulseResponse(ctx, p);
+    };
+
+    m.params = [
+      {key:'mix', label:'Wet/Dry', min:0, max:100, step:1, value:28, unit:'%',
+       apply:v=>{
+         m.wet.gain.setTargetAtTime(v/100, ctx.currentTime, .02);
+         m.dry.gain.setTargetAtTime(1-(v/100)*0.4, ctx.currentTime, .02);
+       }}
+    ];
+  };
+  return m;
+}
+
+/* =================================================================
+   DYNAMIC ROUTING MANAGER
+   Rewires the entire chain. Bypassed/off modules are physically
+   disconnected; the signal bridges the previous ACTIVE module
+   directly to the next ACTIVE module so the stream never dead-ends.
+   ================================================================= */
+function rewireChain(){
+  if(!audioCtx || !sourceNode || !masterLimiter) return;
+
+  // 1. disconnect everything from a clean slate
+  try{ sourceNode.disconnect(); }catch(e){}
+  CHAIN.forEach(mod=>{
+    try{ mod.output.disconnect(); }catch(e){}
+  });
+
+  // 2. collect the active modules in order
+  const active = CHAIN.filter(mod=>!mod.bypassed);
+
+  // 3. bridge: source -> [active modules] -> masterLimiter
+  let prev = sourceNode;
+  active.forEach(mod=>{
+    prev.connect(mod.input);
+    prev = mod.output;
+  });
+  prev.connect(masterLimiter);
+  // masterLimiter is permanently wired to destination + analyser at startup
+}
+
+/* =================================================================
+   ENGINE STARTUP / SHUTDOWN
+   ================================================================= */
+async function powerOn(){
+  try{
+    // AudioContext only created after user gesture (this click)
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({
+      latencyHint:'interactive',
+      sampleRate:48000
+    });
+    if(audioCtx.state === 'suspended') await audioCtx.resume();
+
+    // request microphone / audio interface
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio:{
+        echoCancellation:false,
+        noiseSuppression:false,
+        autoGainControl:false
+      }
+    });
+    sourceNode = audioCtx.createMediaStreamSource(micStream);
+
+    // master output stage: brickwall safety limiter
+    masterLimiter = audioCtx.createDynamicsCompressor();
+    masterLimiter.threshold.value = -0.5;
+    masterLimiter.ratio.value = 20;
+    masterLimiter.knee.value = 0;
+    masterLimiter.attack.value = 0.002;
+    masterLimiter.release.value = 0.05;
+
+    // analyser for the output meter
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+
+    masterLimiter.connect(analyser);
+    masterLimiter.connect(audioCtx.destination);
+
+    // build every module's nodes now that we have a context
+    CHAIN.forEach(mod=>mod.build(audioCtx));
+
+    // apply default param values to the freshly built nodes
+    CHAIN.forEach(mod=>{
+      mod.params.forEach(p=>p.apply(p.value));
+      if(mod.id==='verb' && mod.setProfile) mod.setProfile(mod.profile);
+    });
+
+    rewireChain();
+    startMeter();
+
+    powered = true;
+    setStatus(true, 'RIG LIVE — microphone engaged');
+    document.getElementById('powerBtn').classList.add('on');
+    document.getElementById('powerBtn').textContent = 'Power Off';
+    ['panicBtn','saveBtn','loadBtn'].forEach(id=>{
+      document.getElementById(id).disabled = false;
+    });
+  }catch(err){
+    console.error(err);
+    setStatus(false, 'ERROR — '+(err.name==='NotAllowedError'
+      ? 'microphone permission denied' : err.message));
+    await fullShutdown();
+  }
+}
+
+async function fullShutdown(){
+  stopMeter();
+  // forcefully release the mic / interface stream
+  if(micStream){
+    micStream.getTracks().forEach(t=>t.stop());
+    micStream = null;
+  }
+  if(audioCtx){
+    try{ await audioCtx.suspend(); }catch(e){}
+    try{ await audioCtx.close(); }catch(e){}
+    audioCtx = null;
+  }
+  sourceNode = null;
+  masterLimiter = null;
+  analyser = null;
+  powered = false;
+
+  setStatus(false, 'RIG OFFLINE — press Power On to engage');
+  document.getElementById('powerBtn').classList.remove('on');
+  document.getElementById('powerBtn').textContent = 'Power On';
+  ['panicBtn','saveBtn','loadBtn'].forEach(id=>{
+    document.getElementById(id).disabled = true;
+  });
+  document.getElementById('masterMeter').style.width = '0%';
+}
+
+/* output meter loop */
+function startMeter(){
+  const buf = new Uint8Array(analyser.frequencyBinCount);
+  const fill = document.getElementById('masterMeter');
+  function tick(){
+    if(!analyser){ return; }
+    analyser.getByteTimeDomainData(buf);
+    let peak = 0;
+    for(let i=0;i<buf.length;i++){
+      const v = Math.abs(buf[i]-128)/128;
+      if(v>peak) peak = v;
+    }
+    fill.style.width = Math.min(100, peak*140) + '%';
+    meterRAF = requestAnimationFrame(tick);
+  }
+  tick();
+}
+function stopMeter(){
+  if(meterRAF) cancelAnimationFrame(meterRAF);
+  meterRAF = null;
+}
+
+function setStatus(live, text){
+  document.getElementById('statusLed').classList.toggle('live', live);
+  document.getElementById('statusText').textContent = text;
+}
+
+/* =================================================================
+   PANIC — reset EQ to 0dB, bypass heavy fx, master trim to 0
+   ================================================================= */
+function panic(){
+  CHAIN.forEach(mod=>{
+    if(mod.id==='eq'){
+      mod.params.forEach(p=>{ p.value = 0; if(powered) p.apply(0); });
+    }
+    if(mod.id==='delay' || mod.id==='wah'){
+      mod.bypassed = true;
+    }
+  });
+  if(powered) rewireChain();
+  renderRack();         // refresh UI to reflect resets
+  setStatus(powered, powered ? 'PANIC — chain reset to safe state'
+                              : 'RIG OFFLINE — press Power On to engage');
+}
+
+/* =================================================================
+   PRESET SAVE / LOAD  (local .json only — no cloud)
+   ================================================================= */
+function saveConfig(){
+  const state = { app:'AuraRack', version:1, modules:{} };
+  CHAIN.forEach(mod=>{
+    const ms = { bypassed:mod.bypassed, params:{} };
+    mod.params.forEach(p=>{ ms.params[p.key] = p.value; });
+    if(mod.id==='verb') ms.profile = mod.profile;
+    state.modules[mod.id] = ms;
+  });
+  const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'aura-rack-preset.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  setStatus(powered, 'CONFIG SAVED — aura-rack-preset.json');
+}
+
+function loadConfigFile(file){
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const state = JSON.parse(e.target.result);
+      if(!state || !state.modules) throw new Error('invalid preset');
+      CHAIN.forEach(mod=>{
+        const ms = state.modules[mod.id];
+        if(!ms) return;
+        if(typeof ms.bypassed === 'boolean') mod.bypassed = ms.bypassed;
+        if(ms.params){
+          mod.params.forEach(p=>{
+            if(typeof ms.params[p.key] === 'number'){
+              p.value = ms.params[p.key];
+              if(powered) p.apply(p.value);
             }
-
-            // STARTUP SEQUENCE
-            if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
-                alert("CRITICAL: Secure HTTPS connection required for Audio Interface access.");
-                return;
-            }
-
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive', sampleRate: 48000 });
-                } else if (audioCtx.state === 'suspended') {
-                    await audioCtx.resume();
-                }
-
-                inputStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
-
-                inputNode = audioCtx.createMediaStreamSource(inputStream);
-                masterGain = audioCtx.createGain();
-                safetyLimiter = audioCtx.createDynamicsCompressor();
-
-                safetyLimiter.threshold.setValueAtTime(-0.5, audioCtx.currentTime);
-                safetyLimiter.ratio.setValueAtTime(20.0, audioCtx.currentTime);
-
-                frequencies.forEach((freq) => {
-                    const filter = audioCtx.createBiquadFilter();
-                    filter.frequency.value = freq; filter.gain.value = 0;
-                    if (freq === 80) filter.type = 'lowshelf';
-                    else if (freq === 12000) filter.type = 'highshelf';
-                    else { filter.type = 'peaking'; filter.Q.value = 1.3; }
-                    filters[freq] = filter;
-                });
-
-                // Core Routing
-                inputNode.connect(filters[80]);
-                filters[80].connect(filters[250]);
-                filters[250].connect(filters[1000]);
-                filters[1000].connect(filters[3000]);
-                filters[3000].connect(filters[7000]);
-                filters[7000].connect(filters[12000]);
-                filters[12000].connect(masterGain);
-                
-                masterGain.connect(safetyLimiter);
-                safetyLimiter.connect(audioCtx.destination);
-
-                statusIndicator.innerText = "ACTIVE";
-                statusIndicator.style.color = "var(--gold-accent)";
-                startBtn.classList.add('active');
-                startBtn.innerText = "POWER OFF";
-                isRigActive = true;
-
-                setupEventListeners();
-
-            } catch (err) {
-                alert("HARDWARE ERROR: Ensure no other app is locking your audio interface.");
-                console.error(err);
-            }
-        });
-
-        // Live Controls
-        function setupEventListeners() {
-            frequencies.forEach(freq => {
-                const slider = document.getElementById(`eq-${freq}`);
-                const display = document.getElementById(`v-${freq}`);
-                slider.addEventListener('input', (e) => {
-                    const value = parseFloat(e.target.value);
-                    display.innerText = `${value > 0 ? '+' : ''}${value}dB`;
-                    if (filters[freq]) filters[freq].gain.setValueAtTime(value, audioCtx.currentTime);
-                });
-            });
-
-            trimSlider.addEventListener('input', (e) => {
-                const value = parseFloat(e.target.value);
-                document.getElementById('v-trim').innerText = `${value > 0 ? '+' : ''}${value}dB`;
-                if (masterGain) masterGain.gain.setValueAtTime(Math.pow(10, value / 20), audioCtx.currentTime);
-            });
-
-            verbMixSlider.addEventListener('input', (e) => {
-                document.getElementById('v-mix').innerText = `${e.target.value}%`;
-                // Mix routing logic will map here when IR WAV files are loaded
-            });
-
-            eqBypassToggle.addEventListener('change', (e) => {
-                if (!isRigActive || !inputNode) return;
-                inputNode.disconnect();
-                if (e.target.checked) inputNode.connect(filters[80]);
-                else inputNode.connect(masterGain);
-            });
+          });
         }
+        if(mod.id==='verb' && ms.profile){
+          mod.profile = ms.profile;
+          if(powered && mod.setProfile) mod.setProfile(ms.profile);
+        }
+      });
+      if(powered) rewireChain();
+      renderRack();
+      setStatus(powered, 'CONFIG LOADED — preset applied');
+    }catch(err){
+      console.error(err);
+      setStatus(powered, 'LOAD FAILED — '+err.message);
+    }
+  };
+  reader.readAsText(file);
+}
 
-        // Global Panic
-        panicBtn.addEventListener('click', () => {
-            frequencies.forEach(freq => {
-                document.getElementById(`eq-${freq}`).value = 0;
-                document.getElementById(`v-${freq}`).innerText = "0dB";
-                if (audioCtx && filters[freq]) filters[freq].gain.setValueAtTime(0, audioCtx.currentTime);
-            });
-            trimSlider.value = 0;
-            document.getElementById('v-trim').innerText = "0dB";
-            if (audioCtx && masterGain) masterGain.gain.setValueAtTime(1.0, audioCtx.currentTime);
-            
-            verbMixSlider.value = 15;
-            document.getElementById('v-mix').innerText = "15%";
+/* =================================================================
+   UI RENDERING
+   ================================================================= */
+function fmtReadout(p){
+  let v = p.value;
+  if(p.unit===':1') return v.toFixed(1)+':1';
+  if(p.unit==='dB') return (v>0?'+':'')+v.toFixed(1)+' dB';
+  if(p.unit==='Hz'){
+    if(v>=1000) return (v/1000).toFixed(1)+' kHz';
+    return v.toFixed(0)+' Hz';
+  }
+  if(p.unit==='%') return v.toFixed(0)+' %';
+  return v.toFixed(1)+' '+(p.unit||'');
+}
+
+function renderRack(){
+  const body = document.getElementById('rackBody');
+  body.innerHTML = '';
+
+  CHAIN.forEach(mod=>{
+    const card = document.createElement('section');
+    card.className = 'module' + (mod.bypassed ? ' bypassed' : '');
+    card.dataset.mod = mod.id;
+
+    /* ---- header with bypass toggle ---- */
+    const head = document.createElement('div');
+    head.className = 'module-head';
+    head.innerHTML =
+      '<div class="module-title"><h2>'+mod.name+'</h2><span>'+mod.sub+'</span></div>';
+
+    const tWrap = document.createElement('div');
+    tWrap.className = 'toggle-wrap';
+    const tog = document.createElement('div');
+    tog.className = 'toggle' + (mod.bypassed ? '' : ' active');
+    tog.setAttribute('role','switch');
+    tog.setAttribute('aria-checked', (!mod.bypassed).toString());
+    tog.addEventListener('click', ()=>{
+      mod.bypassed = !mod.bypassed;
+      tog.classList.toggle('active', !mod.bypassed);
+      card.classList.toggle('bypassed', mod.bypassed);
+      if(powered) rewireChain();
+    });
+    const tLabel = document.createElement('label');
+    tLabel.textContent = 'Engage';
+    tWrap.appendChild(tog);
+    tWrap.appendChild(tLabel);
+    head.appendChild(tWrap);
+    card.appendChild(head);
+
+    /* ---- body ---- */
+    const mb = document.createElement('div');
+    mb.className = 'module-body';
+
+    /* reverb profile dropdown */
+    if(mod.id==='verb'){
+      const sw = document.createElement('div');
+      sw.className = 'select-wrap';
+      sw.innerHTML = '<label>Acoustic Profile</label>';
+      const sel = document.createElement('select');
+      sel.className = 'aura-select';
+      [['hall','Pristine Hall'],['plate','Silky Plate'],['room','Acoustic Room']]
+        .forEach(([v,t])=>{
+          const o = document.createElement('option');
+          o.value = v; o.textContent = t;
+          if(mod.profile===v) o.selected = true;
+          sel.appendChild(o);
         });
-    </script>
+      sel.addEventListener('change', ()=>{
+        mod.profile = sel.value;
+        if(powered && mod.setProfile) mod.setProfile(sel.value);
+      });
+      sw.appendChild(sel);
+      mb.appendChild(sw);
+    }
+
+    /* delay tap-tempo button */
+    if(mod.id==='delay'){
+      const tap = document.createElement('button');
+      tap.className = 'tap-btn';
+      tap.innerHTML = 'TAP TEMPO<span class="bpm" id="bpmReadout">— BPM</span>';
+      tap.addEventListener('click', ()=>{
+        const res = mod.tap();
+        const ro = tap.querySelector('.bpm');
+        if(res) ro.textContent = res.bpm + ' BPM';
+        else ro.textContent = 'TAP…';
+      });
+      mb.appendChild(tap);
+    }
+
+    /* fader rack — every numeric param becomes a vertical fader */
+    const rack = document.createElement('div');
+    rack.className = 'fader-rack';
+
+    mod.params.forEach(p=>{
+      const f = document.createElement('div');
+      f.className = 'fader';
+
+      const vp = document.createElement('div');
+      vp.className = 'fader-viewport';
+
+      const inp = document.createElement('input');
+      inp.type = 'range';
+      inp.className = 'vfader';
+      inp.min = p.min; inp.max = p.max; inp.step = p.step;
+      inp.value = p.value;
+
+      const ro = document.createElement('div');
+      ro.className = 'fader-readout';
+      ro.textContent = fmtReadout(p);
+
+      inp.addEventListener('input', ()=>{
+        p.value = parseFloat(inp.value);
+        ro.textContent = fmtReadout(p);
+        if(powered) p.apply(p.value);
+      });
+
+      vp.appendChild(inp);
+      const lbl = document.createElement('div');
+      lbl.className = 'fader-label';
+      lbl.textContent = p.label;
+
+      f.appendChild(vp);
+      f.appendChild(lbl);
+      f.appendChild(ro);
+      rack.appendChild(f);
+    });
+    mb.appendChild(rack);
+
+    /* notes */
+    if(mod.id==='verb'){
+      const note = document.createElement('div');
+      note.className = 'module-note';
+      note.textContent = 'Impulse responses synthesized in real time — '
+        + 'placeholder for studio WAV captures.';
+      mb.appendChild(note);
+    }
+    if(mod.id==='delay'){
+      const note = document.createElement('div');
+      note.className = 'module-note';
+      note.textContent = 'Sidechain ducking pulls the echo tail down '
+        + 'beneath the dry vocal for clarity.';
+      mb.appendChild(note);
+    }
+
+    card.appendChild(mb);
+    body.appendChild(card);
+  });
+}
+
+/* =================================================================
+   INITIALISE — populate the chain, wire master controls
+   ================================================================= */
+CHAIN.push(createEQ());
+CHAIN.push(createComp());
+CHAIN.push(createWah());
+CHAIN.push(createSaturation());
+CHAIN.push(createModulation());
+CHAIN.push(createDelay());
+CHAIN.push(createVerb());
+
+// render UI immediately (params have default values pre-build)
+renderRack();
+
+/* master control wiring */
+document.getElementById('powerBtn').addEventListener('click', async ()=>{
+  const btn = document.getElementById('powerBtn');
+  btn.disabled = true;
+  if(!powered){
+    await powerOn();
+  }else{
+    await fullShutdown();
+  }
+  btn.disabled = false;
+});
+
+document.getElementById('panicBtn').addEventListener('click', panic);
+document.getElementById('saveBtn').addEventListener('click', saveConfig);
+document.getElementById('loadBtn').addEventListener('click', ()=>{
+  document.getElementById('fileInput').click();
+});
+document.getElementById('fileInput').addEventListener('change', e=>{
+  if(e.target.files && e.target.files[0]){
+    loadConfigFile(e.target.files[0]);
+    e.target.value = '';   // allow re-loading same file
+  }
+});
+
+/* release the mic if the tab is closed */
+window.addEventListener('beforeunload', ()=>{
+  if(micStream) micStream.getTracks().forEach(t=>t.stop());
+});
+</script>
 </body>
 </html>
