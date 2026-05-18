@@ -113,10 +113,61 @@
     background:linear-gradient(90deg,var(--green-live) 0%,var(--gold) 72%,var(--red-live) 100%);
     transition:width .05s linear;}
 
-  .rack-row{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;}
-  @media(max-width:1100px){.rack-row{grid-template-columns:repeat(4,1fr);}}
+  .rack-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+  @media(max-width:1100px){.rack-row{grid-template-columns:repeat(3,1fr);}}
   @media(max-width:820px){.rack-row{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:560px){.rack-row{grid-template-columns:1fr;}}
+
+  /* ---- horizontal 1U EQ strip ---- */
+  .eq-strip{
+    background:linear-gradient(180deg,#1a1a1d 0%,#101012 100%);
+    border:1px solid var(--panel-edge);border-radius:12px;
+    padding:14px 16px;margin-bottom:14px;
+    box-shadow:0 6px 16px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04),inset 0 -3px 10px rgba(0,0,0,.5);
+    transition:border-color .2s;
+    display:flex;align-items:stretch;gap:18px;flex-wrap:nowrap;
+  }
+  .eq-strip.engaged{border-color:#4a3c1e;}
+  .eq-strip-head{
+    display:flex;flex-direction:column;justify-content:center;
+    min-width:128px;border-right:1px solid #26262b;padding-right:16px;
+  }
+  .eq-strip-head .panel-name{font-family:'Cinzel',serif;font-weight:600;font-size:13px;letter-spacing:.1em;color:var(--gold);}
+  .eq-strip-head .panel-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:9px;color:var(--text-dim);margin-top:3px;line-height:1.35;}
+  .eq-strip-state{display:flex;align-items:center;gap:6px;margin-top:9px;}
+  .eq-strip-curve{
+    flex:1 1 240px;min-width:200px;max-width:300px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .eq-strip-curve canvas{
+    display:block;width:100%;height:118px;border-radius:5px;cursor:crosshair;touch-action:none;
+    background:var(--viewport);border:1px solid #1a1a1e;
+    box-shadow:inset 0 3px 9px rgba(0,0,0,.7);
+  }
+  .eq-strip-curve .curve-hint{font-size:7.5px;letter-spacing:.06em;color:var(--text-dim);text-align:center;margin-top:5px;font-style:italic;font-family:'Playfair Display',serif;}
+  .eq-strip-knobs{
+    flex:1;display:flex;align-items:center;justify-content:center;
+    gap:10px 6px;flex-wrap:wrap;
+  }
+  /* override .knob-unit's width:100% — inside the strip each knob is a
+     fixed-width cell so they pack one row when there's room and wrap
+     to a tidy centered second row when there isn't. */
+  .eq-strip-knobs .knob-unit{
+    width:62px;flex:0 0 62px;
+  }
+  .eq-strip-knobs .knob{width:46px;height:46px;}
+  .eq-strip-knobs .knob-pointer{height:14px;transform-origin:50% 18px;top:5px;}
+  .eq-strip-foot{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    border-left:1px solid #26262b;padding-left:16px;min-width:74px;
+  }
+  @media(max-width:820px){
+    .eq-strip{flex-wrap:wrap;}
+    .eq-strip-head{border-right:none;border-bottom:1px solid #26262b;padding-right:0;padding-bottom:10px;width:100%;min-width:0;}
+    .eq-strip-curve{flex:1 1 100%;max-width:none;}
+    .eq-strip-knobs{flex:1 1 100%;width:100%;margin-top:6px;gap:12px 4px;}
+    .eq-strip-foot{border-left:none;border-top:1px solid #26262b;padding-left:0;padding-top:10px;width:100%;flex-direction:row;}
+  }
 
   .panel{
     background:linear-gradient(180deg,#1a1a1d 0%,#101012 100%);
@@ -310,6 +361,8 @@
       <div class="lcd" id="statusLcd">RIG OFFLINE — PRESS POWER ON</div>
     </div>
 
+    <div class="eq-strip" id="eqStrip"></div>
+
     <div class="rack-row" id="rackRow"></div>
 
     <input type="file" id="fileInput" accept="application/json,.json" style="display:none">
@@ -477,12 +530,12 @@ function createEQ(){
   // PARAMS DEFINED IMMEDIATELY (the v6 fix)
   m.params=[
     P('hp','Hi-Pass','knob',20,300,5,20,'Hz'),
-    P('band0','Low','fader',-12,12,.5,0,'dB'),
-    P('band1','250','fader',-12,12,.5,0,'dB'),
-    P('band2','1k','fader',-12,12,.5,0,'dB'),
-    P('band3','3k','fader',-12,12,.5,0,'dB'),
-    P('band4','7k','fader',-12,12,.5,0,'dB'),
-    P('band5','12k','fader',-12,12,.5,0,'dB'),
+    P('band0','Low','knob',-12,12,.5,0,'dB'),
+    P('band1','250','knob',-12,12,.5,0,'dB'),
+    P('band2','1k','knob',-12,12,.5,0,'dB'),
+    P('band3','3k','knob',-12,12,.5,0,'dB'),
+    P('band4','7k','knob',-12,12,.5,0,'dB'),
+    P('band5','12k','knob',-12,12,.5,0,'dB'),
     P('q','Q','knob',0.3,6,.1,1.3,'Q'),
     P('trim','Trim','knob',-12,12,.5,0,'dB')
   ];
@@ -1269,12 +1322,115 @@ function updateMasterKnob(){
   document.getElementById('masterGainRead').textContent=masterGainDb.toFixed(1)+' dB';
 }
 
+/* ------ horizontal 1U EQ strip (renders AuraEQ on its own) ------ */
+function renderEQStrip(){
+  const strip=document.getElementById('eqStrip');
+  if(!strip) return;
+  const mod=CHAIN.find(m=>m.id==='eq');
+  if(!mod) return;
+  strip.innerHTML='';
+  strip.className='eq-strip'+(mod.bypassed?'':' engaged');
+
+  /* HEAD: name + state */
+  const head=document.createElement('div');
+  head.className='eq-strip-head';
+  head.innerHTML='<div class="panel-name">'+mod.name+'</div>'
+    +'<div class="panel-sub">'+mod.sub+'</div>';
+  const stWrap=document.createElement('div');
+  stWrap.className='eq-strip-state panel-state'+(mod.bypassed?'':' on');
+  const led=document.createElement('span');
+  led.className='panel-led';
+  const stText=document.createElement('span');
+  stText.className='panel-state-text';
+  stText.textContent=mod.bypassed?'BYPASSED':'ACTIVE';
+  stWrap.appendChild(led);stWrap.appendChild(stText);
+  head.appendChild(stWrap);
+  strip.appendChild(head);
+  mod._ledEl=led;
+
+  /* CURVE */
+  const curveWrap=document.createElement('div');
+  curveWrap.className='eq-strip-curve';
+  const eqCanvas=document.createElement('canvas');
+  eqCanvas.width=560;eqCanvas.height=118;
+  curveWrap.appendChild(eqCanvas);
+  const hint=document.createElement('div');
+  hint.className='curve-hint';
+  hint.textContent='Drag the points to shape your tone';
+  curveWrap.appendChild(hint);
+  strip.appendChild(curveWrap);
+
+  /* KNOBS: all 9 params in a row */
+  const knobWrap=document.createElement('div');
+  knobWrap.className='eq-strip-knobs';
+  mod.params.forEach(p=>{
+    const u=document.createElement('div');
+    u.className='knob-unit';u.dataset.pkey=p.key;
+    const knob=document.createElement('div');
+    knob.className='knob';
+    knob.innerHTML='<div class="knob-pointer"></div><div class="knob-cap"></div>';
+    const lbl=document.createElement('div');
+    lbl.className='knob-label';lbl.textContent=p.label;
+    const ro=document.createElement('div');
+    ro.className='knob-readout';ro.textContent=fmtReadout(p);
+    u.appendChild(knob);u.appendChild(lbl);u.appendChild(ro);
+    knobWrap.appendChild(u);
+    attachKnob(knob,p,()=>{
+      p.apply();
+      ro.textContent=fmtReadout(p);
+      drawEQCurve(eqCanvas,mod);
+    });
+  });
+  strip.appendChild(knobWrap);
+
+  /* FOOT: engage toggle */
+  const foot=document.createElement('div');
+  foot.className='eq-strip-foot';
+  const tog=document.createElement('div');
+  tog.className='toggle'+(mod.bypassed?'':' active');
+  tog.addEventListener('click',()=>{
+    mod.bypassed=!mod.bypassed;
+    tog.classList.toggle('active',!mod.bypassed);
+    strip.classList.toggle('engaged',!mod.bypassed);
+    stWrap.classList.toggle('on',!mod.bypassed);
+    stText.textContent=mod.bypassed?'BYPASSED':'ACTIVE';
+    if(!powered||mod.bypassed) led.classList.remove('lit');
+    if(powered) rewireChain();
+  });
+  const tlbl=document.createElement('div');
+  tlbl.className='toggle-label';tlbl.textContent='Engage';
+  foot.appendChild(tog);foot.appendChild(tlbl);
+  strip.appendChild(foot);
+
+  /* draw + wire the curve after layout settles */
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      drawEQCurve(eqCanvas,mod);
+      attachEQCanvas(eqCanvas,mod,(band)=>{
+        // sync the matching knob's readout + pointer
+        const ku=knobWrap.querySelector('[data-pkey="band'+band+'"]');
+        if(ku){
+          const p=mod.params.find(pp=>pp.key==='band'+band);
+          const ro=ku.querySelector('.knob-readout');
+          const ptr=ku.querySelector('.knob-pointer');
+          if(ro) ro.textContent=fmtReadout(p);
+          if(ptr){
+            const frac=(p.value-p.min)/(p.max-p.min);
+            ptr.style.transform='rotate('+(-135+frac*270)+'deg)';
+          }
+        }
+        drawEQCurve(eqCanvas,mod);
+      });
+    });
+  });
+}
+
 function renderRack(){
   const row=document.getElementById('rackRow');
   row.innerHTML='';
-  const pendingCurves=[];
 
   CHAIN.forEach(mod=>{
+    if(mod.id==='eq') return;  // EQ renders separately as a horizontal 1U strip
     const panel=document.createElement('div');
     panel.className='panel'+(mod.bypassed?'':' engaged');
 
@@ -1297,21 +1453,6 @@ function renderRack(){
 
     const body=document.createElement('div');
     body.className='panel-body';
-
-    let eqCanvas=null;
-    if(mod.hasCurve){
-      const cs=document.createElement('div');
-      cs.className='curve-slot';
-      eqCanvas=document.createElement('canvas');
-      eqCanvas.width=240;eqCanvas.height=96;
-      cs.appendChild(eqCanvas);
-      const hint=document.createElement('div');
-      hint.className='curve-hint';
-      hint.textContent='Drag the points to shape your tone';
-      cs.appendChild(hint);
-      body.appendChild(cs);
-      pendingCurves.push({canvas:eqCanvas,mod:mod});
-    }
 
     if(mod.id==='verb'){
       const sw=document.createElement('div');
@@ -1400,7 +1541,6 @@ function renderRack(){
           p.value=parseFloat(inp.value);
           p.apply();
           ro.textContent=fmtReadout(p);
-          if(mod.hasCurve&&eqCanvas) drawEQCurve(eqCanvas,mod);
         });
         slot.appendChild(inp);
         const lbl=document.createElement('div');
@@ -1431,7 +1571,6 @@ function renderRack(){
         const ctl=attachKnob(knob,p,()=>{
           p.apply();
           ro.textContent=fmtReadout(p);
-          if(mod.hasCurve&&eqCanvas) drawEQCurve(eqCanvas,mod);
         });
         u._knob=ctl;
       });
@@ -1461,24 +1600,8 @@ function renderRack(){
     row.appendChild(panel);
   });
 
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      pendingCurves.forEach(pc=>{
-        drawEQCurve(pc.canvas,pc.mod);
-        attachEQCanvas(pc.canvas,pc.mod,(band)=>{
-          if(pc.mod._faderBank){
-            const fu=pc.mod._faderBank.querySelector('[data-pkey="band'+band+'"]');
-            if(fu){
-              const p=pc.mod.params.find(pp=>pp.key==='band'+band);
-              if(fu._input) fu._input.value=p.value;
-              if(fu._readout) fu._readout.textContent=fmtReadout(p);
-            }
-          }
-          drawEQCurve(pc.canvas,pc.mod);
-        });
-      });
-    });
-  });
+  // EQ is no longer a vertical panel — render it as the horizontal strip
+  renderEQStrip();
 }
 
 /* =================================================================
