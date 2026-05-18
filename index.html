@@ -70,8 +70,12 @@
   .btn-power{border-color:var(--gold-deep);color:var(--gold-bright);}
   .btn-power.on{background:linear-gradient(180deg,#3a2e16,#241c0d);border-color:var(--gold);
     box-shadow:0 0 16px rgba(197,160,89,.45),inset 0 1px 0 rgba(255,255,255,.06);}
-  .btn-panic{border-color:#5a2620;color:#e08c80;}
-  .btn-panic:active{background:linear-gradient(180deg,#3a1714,#220d0b);}
+  .btn-bypass{border-color:#3a3a44;color:var(--text-dim);}
+  .btn-bypass.on{
+    background:linear-gradient(180deg,#3a2e16,#241c0d);border-color:var(--gold);
+    color:var(--gold-bright);
+    box-shadow:0 0 16px rgba(197,160,89,.4),inset 0 1px 0 rgba(255,255,255,.06);
+  }
   .power-lamp{width:13px;height:13px;border-radius:50%;background:#2a1a16;
     box-shadow:inset 0 0 4px rgba(0,0,0,.9);transition:background .25s,box-shadow .25s;flex:none;}
   .power-lamp.live{background:var(--green-led);
@@ -249,11 +253,8 @@
 <body>
 <div class="shell">
 
-  <div class="title-block">
-    <div class="title-eyebrow">VICTORY MUSICAL INSTRUMENTS</div>
-    <div class="title-main"><span class="a">The </span><span class="b">Aura Rack</span></div>
-    <div class="title-sub">PREMIUM CHANNEL STRIP &amp; MULTI-EFFECT</div>
-  </div>
+  <!-- Title block removed: the app is embedded in victorymusical.com/pages/aura-rack
+       where the page provides the heading. Rack starts flush at the enclosure. -->
 
   <div class="enclosure">
     <span class="screw tl"></span><span class="screw tr"></span>
@@ -263,7 +264,7 @@
       <div class="mb-section">
         <span class="power-lamp" id="powerLamp"></span>
         <button class="btn btn-power" id="powerBtn">Power On</button>
-        <button class="btn btn-panic" id="panicBtn">Panic</button>
+        <button class="btn btn-bypass" id="bypassBtn">Master Bypass</button>
       </div>
       <div class="mb-divider"></div>
       <div class="mb-section">
@@ -313,7 +314,7 @@
 
   <section class="guide">
     <h2>THE AURA RACK</h2>
-    <div class="guide-tag">Guide, Glossary &amp; Best Practices</div>
+    <div class="guide-tag">Guide &amp; Best Practices</div>
 
     <h3>What Is The Aura Rack?</h3>
     <p>The Aura Rack is a professional vocal channel strip and multi-effect that runs right in your browser — no installs, no downloads. Plug in your microphone or audio interface, and your voice passes through a chain of seven studio-quality modules before reaching your speakers or PA. It is built for solo singers and acoustic players performing live from an iPad or laptop.</p>
@@ -338,37 +339,7 @@
     <div class="mod-entry"><span class="mod-name">AuraVerb — Space &amp; Ambience.</span><div class="mod-desc">Places your voice in an acoustic space — a crystalline glass reverb, an intimate room, a concert hall, a chapel, or a grand cathedral. Long spaces like the cathedral sound best with a low Wet/Dry mix and some Pre-Delay — let the tail bloom behind your voice, not over it.</div></div>
 
     <h3>Master Controls</h3>
-    <p><b>Power On / Off</b> engages the whole rig and connects your input. <b>Panic</b> instantly resets the EQ to flat, bypasses the heavy effects, and returns Master to 0 dB — your safety button if something sounds wrong mid-show. <b>Save / Load</b> stores all your settings to a file on your device. <b>Preset</b> loads a complete professional rack voicing — it sets the modules and effects, but leaves your Master volume untouched, since that belongs to you and the room. <b>Master</b> sets your final output level; the <b>IN / OUT meters</b> show your signal coming in and leaving.</p>
-
-    <h3>Glossary</h3>
-    <dl class="glossary">
-      <div class="gl-term"><dt>EQ (Equalization)</dt><dd>Turning specific frequency ranges up or down to shape tone.</dd></div>
-      <div class="gl-term"><dt>Frequency</dt><dd>How high or low a sound is, measured in Hertz (Hz). Low Hz is bass; high Hz is treble.</dd></div>
-      <div class="gl-term"><dt>High-Pass Filter (Low Cut)</dt><dd>Removes everything below a chosen frequency. Cleans up rumble, stage thump, and mic handling noise.</dd></div>
-      <div class="gl-term"><dt>Shelf Filter</dt><dd>Lifts or lowers everything above or below a point, like a ramp. Used for broad tonal tilts.</dd></div>
-      <div class="gl-term"><dt>Bell (Peak) Filter</dt><dd>Boosts or cuts a hump around one frequency, tapering on both sides. Used for focused adjustments.</dd></div>
-      <div class="gl-term"><dt>Q</dt><dd>The width of a bell filter. Low Q is wide and gentle; high Q is narrow and precise.</dd></div>
-      <div class="gl-term"><dt>Compression</dt><dd>Automatically reduces the volume of loud moments so your overall level stays even.</dd></div>
-      <div class="gl-term"><dt>Threshold</dt><dd>The level at which compression starts working. Signal above it gets turned down.</dd></div>
-      <div class="gl-term"><dt>Ratio</dt><dd>How strongly the compressor acts once the threshold is crossed. 2:1 is gentle; 10:1 is firm.</dd></div>
-      <div class="gl-term"><dt>Attack / Release</dt><dd>How quickly the compressor reacts when sound gets loud, and how quickly it lets go after.</dd></div>
-      <div class="gl-term"><dt>Makeup Gain</dt><dd>Volume added back after compression to restore your overall level.</dd></div>
-      <div class="gl-term"><dt>Saturation / Tube Warmth</dt><dd>Gentle, musical distortion that rounds off peaks and adds harmonic richness — the warmth of vintage analog gear.</dd></div>
-      <div class="gl-term"><dt>Harmonics</dt><dd>New, musically-related frequencies added to a sound, perceived as richness or warmth.</dd></div>
-      <div class="gl-term"><dt>Chorus</dt><dd>An effect that layers slightly delayed, slowly-wavering copies of a sound to make it thicker and wider.</dd></div>
-      <div class="gl-term"><dt>Delay</dt><dd>An echo effect that repeats your sound after a set time.</dd></div>
-      <div class="gl-term"><dt>Feedback</dt><dd>How many times a delay repeats. More feedback means more repeats before they fade.</dd></div>
-      <div class="gl-term"><dt>Tap Tempo</dt><dd>Setting the delay time by tapping a button in rhythm, so echoes match your song.</dd></div>
-      <div class="gl-term"><dt>Ducking</dt><dd>Automatically lowering an effect while you sing, so it doesn't muddy your words, then letting it return between phrases.</dd></div>
-      <div class="gl-term"><dt>Reverb</dt><dd>The sound of a physical space — the natural decay you hear in a room, hall, or chamber.</dd></div>
-      <div class="gl-term"><dt>Impulse Response (IR)</dt><dd>A recording of how a real space responds to sound, used to recreate that exact space.</dd></div>
-      <div class="gl-term"><dt>Pre-Delay</dt><dd>A short gap before the reverb begins, which keeps your voice clear and upfront.</dd></div>
-      <div class="gl-term"><dt>Wet / Dry Mix</dt><dd>The balance between your unprocessed sound (dry) and the effect (wet).</dd></div>
-      <div class="gl-term"><dt>Gain</dt><dd>Volume level.</dd></div>
-      <div class="gl-term"><dt>Headroom</dt><dd>The safety margin before a signal distorts. More headroom means less risk of clipping.</dd></div>
-      <div class="gl-term"><dt>Bypass</dt><dd>Switching a module off so the signal passes through untouched.</dd></div>
-      <div class="gl-term"><dt>Limiter</dt><dd>A safety processor that stops the signal exceeding a maximum level. The Aura Rack keeps one on the master output to protect your speakers.</dd></div>
-    </dl>
+    <p><b>Power On / Off</b> engages the whole rig and connects your input — Power Off fully releases the microphone and shuts the rig down. <b>Master Bypass</b> instantly routes your voice clean and dry, passing it straight through with every effect skipped — the rig stays live and you stay audible, your settings untouched; tap it again to return. <b>Save / Load</b> stores every module setting to a file on your device. <b>Preset</b> loads a complete professional rack voicing — it sets the modules and effects, but leaves your Master volume untouched, since that belongs to you and the room. <b>Master</b> sets your final output level; the <b>IN / OUT meters</b> show your signal coming in and leaving.</p>
 
     <h3>Best Practices For Live Use</h3>
     <ul class="best-list">
@@ -376,8 +347,8 @@
       <li><b>Set your level with the room.</b> Soundcheck the Master knob in the actual venue — rooms vary enormously.</li>
       <li><b>Use a high-pass cut.</b> Rolling off the extreme lows cleans up almost every live vocal.</li>
       <li><b>Keep delay and reverb tasteful.</b> Long tails sound great alone and muddy in a full mix.</li>
-      <li><b>Save a preset per venue.</b> Loading the same settings each night saves soundcheck time.</li>
-      <li><b>Know where Panic is.</b> If feedback or a bad setting hits mid-song, one tap brings you back to safe.</li>
+      <li><b>Save your setup per venue.</b> Loading the same settings each night saves soundcheck time.</li>
+      <li><b>Master Bypass is your safety net.</b> If an effect misbehaves mid-song, one tap drops you to a clean, dry vocal without missing a beat.</li>
     </ul>
 
     <h3>Acknowledgments</h3>
@@ -809,7 +780,12 @@ function rewireChain(){
   if(!audioCtx||!inputGain||!masterGainNode) return;
   try{ inputGain.disconnect(); }catch(e){}
   CHAIN.forEach(mod=>{ if(mod.output){ try{mod.output.disconnect();}catch(e){} } });
-  const active=CHAIN.filter(mod=>!mod.bypassed && mod.input);
+  // Master Bypass: when engaged, NO modules are inserted — signal goes
+  // straight from input to master, clean and dry, regardless of each
+  // module's own Engage state (those states are preserved untouched).
+  const active=masterBypassed
+    ? []
+    : CHAIN.filter(mod=>!mod.bypassed && mod.input);
   let prev=inputGain;
   active.forEach(mod=>{ prev.connect(mod.input); prev=mod.output; });
   prev.connect(masterGainNode);
@@ -952,25 +928,27 @@ function setStatus(live,text){
 }
 
 /* =================================================================
-   PANIC  (resets EQ + master, bypasses heavy fx)
+   MASTER BYPASS
+   When engaged, ALL modules pass clean/dry — the rig stays live and
+   audible, signal just skips every effect. This does NOT mute and does
+   NOT change settings; toggling it off restores every module exactly
+   as it was. Per-module Engage states are remembered separately.
    ================================================================= */
-function panic(){
-  CHAIN.forEach(mod=>{
-    if(mod.id==='eq'){
-      mod.params.forEach(p=>{
-        if(p.key.indexOf('band')===0||p.key==='trim'){ p.value=0; p.apply(); }
-      });
-    }
-    if(mod.id==='delay'||mod.id==='wah') mod.bypassed=true;
-  });
-  masterGainDb=0;
-  updateMasterKnob();
-  if(powered&&masterGainNode)
-    masterGainNode.gain.setTargetAtTime(1,audioCtx.currentTime,.02);
+let masterBypassed=false;
+
+function setMasterBypass(state){
+  masterBypassed=state;
+  const btn=document.getElementById('bypassBtn');
+  btn.classList.toggle('on',masterBypassed);
   if(powered) rewireChain();
-  renderRack();
-  setStatus(powered, powered?'PANIC — CHAIN RESET':'RIG OFFLINE — PRESS POWER ON');
+  if(masterBypassed){
+    setStatus(powered,'MASTER BYPASS — CLEAN SIGNAL');
+  }else{
+    setStatus(powered, powered?'RIG LIVE — INPUT ENGAGED':'RIG OFFLINE — PRESS POWER ON');
+  }
 }
+function toggleMasterBypass(){ setMasterBypass(!masterBypassed); }
+
 
 /* =================================================================
    PRESETS  (v6: presets DO NOT touch master volume)
@@ -1046,12 +1024,15 @@ function applyPreset(key){
    SAVE / LOAD
    ================================================================= */
 function saveConfig(){
-  const state={app:'AuraRack',version:6,masterGainDb:masterGainDb,modules:{}};
+  const state={app:'AuraRack',version:7,masterGainDb:masterGainDb,
+               masterBypassed:masterBypassed,modules:{}};
   CHAIN.forEach(mod=>{
     const ms={bypassed:mod.bypassed,params:{}};
+    // capture EVERY param value for this module
     mod.params.forEach(p=>{ ms.params[p.key]=p.value; });
-    if(mod.id==='verb') ms.profile=mod.profile;
-    if(mod.mode) ms.mode=mod.mode;
+    // capture per-module extras explicitly
+    if(typeof mod.profile==='string') ms.profile=mod.profile;
+    if(typeof mod.mode==='string') ms.mode=mod.mode;
     state.modules[mod.id]=ms;
   });
   const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
@@ -1078,18 +1059,21 @@ function loadConfigFile(file){
         const ms=state.modules[mod.id];
         if(!ms) return;
         if(typeof ms.bypassed==='boolean') mod.bypassed=ms.bypassed;
-        if(ms.mode) mod.mode=ms.mode;
+        if(typeof ms.mode==='string') mod.mode=ms.mode;
+        // restore every saved param value
         if(ms.params){
           mod.params.forEach(p=>{
             if(typeof ms.params[p.key]==='number'){ p.value=ms.params[p.key]; p.apply(); }
           });
         }
-        if(mod.id==='verb'&&ms.profile){
+        if(typeof ms.profile==='string'){
           mod.profile=ms.profile;
           if(powered&&mod.setProfile) mod.setProfile(ms.profile);
         }
         if(mod.id==='delay'&&powered) m_safeWire(mod);
       });
+      // restore master bypass state
+      setMasterBypass(state.masterBypassed===true);
       if(powered) rewireChain();
       renderRack();
       setStatus(powered,'CONFIG LOADED');
@@ -1523,7 +1507,7 @@ document.getElementById('powerBtn').addEventListener('click',async()=>{
   if(!powered) await powerOn(); else await fullShutdown();
   btn.disabled=false;
 });
-document.getElementById('panicBtn').addEventListener('click',panic);
+document.getElementById('bypassBtn').addEventListener('click',toggleMasterBypass);
 document.getElementById('saveBtn').addEventListener('click',saveConfig);
 document.getElementById('loadBtn').addEventListener('click',()=>{
   document.getElementById('fileInput').click();
